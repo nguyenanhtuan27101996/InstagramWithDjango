@@ -81,6 +81,16 @@ def create_comment(request):
     return JsonResponse(data)
 
 
+@csrf_exempt
+def search_user_by_username(request):
+    search_text = request.POST['search_text']
+    if search_text != '':
+        user = User.objects.filter(username__contains=search_text)
+    else:
+        user = None
+    return render(request, 'pages/ajax_search_username.html', {'user_has_been_found': user})
+
+
 def signup_account(request):
     form = RegistationForm()
     if request.method == 'POST':
@@ -142,7 +152,7 @@ def show_post_by_id(request, username, id):
     user = User.objects.get(username=username)
     user_profile = UserProfile.objects.get(user=user)
     images = Image.objects.all().filter(post=post)
-    comments = Comment.objects.all().filter(post=post)
+    comments = Comment.objects.all().filter(post=post).order_by('-time_commented')
     return render(request, 'pages/post_detail.html', {'post': post,
                                                       'images': images,
                                                       'comments': comments,
@@ -180,28 +190,4 @@ def show_personal_setting(request, username):
                                                            'form_change_password': form_change_password})
 
 
-# @login_required(login_url='/accounts/login/')
-# def create_post(request):
-#     template_name = 'pages/home.html'
-#     if request.method == 'GET':
-#         post_form = PostForm(request.GET or None)
-#         formset = ImageFormset(queryset=Image.objects.none())
-#     elif request.method == 'POST':
-#         post_form = PostForm(request.POST)
-#         formset = ImageFormset(request.POST, request.FILES, queryset=Image.objects.none())
-#
-#         if post_form.is_valid() and formset.is_valid():
-#             post = post_form.save(commit=False)
-#             post.user = request.user
-#             post.save()
-#
-#             for form in formset.cleaned_data:
-#                 photo = form['photo']
-#                 image_book = Image(post=post, photo=photo)
-#                 image_book.save()
-#             return redirect('/home/')
-#
-#     return render(request, template_name, {
-#         'post_form': post_form,
-#         'formset': formset,
-#     })
+

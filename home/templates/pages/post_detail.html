@@ -40,7 +40,7 @@
             </div>
 
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 contains-all-about-post">
             <div class="row">
                 <div class="col-md-12">
                     <div class="row header-list-friend">
@@ -65,12 +65,11 @@
                 </div>
             </div>
             <hr>
-            <div class="row" style="max-height: 200px;overflow-y: auto;"
-            >
+            <div class="row contains-comment" style="max-height: 200px;overflow-y: auto;">
                 {% for comment in comments %}
                     <div class="col-md-12">
                         <p class="bold-p-tag-opensans">
-                            <b>{{ comment.user.username }}</b>: &nbsp;
+                            <a class="a-tag-of-home">{{ comment.user.username }}</a>: &nbsp;
                             {{ comment.body }}
                         </p>
                     </div>
@@ -81,6 +80,7 @@
                 <div class="col-md-12" style="margin-bottom: 20px;margin-top: 20px;">
                     <input type="text" class="form-control txt-comment" data-id-post="{{ post.id }}"
                            placeholder="Write a comment..." data-ajax-target="{% url 'create_comment' %}">
+
                 </div>
             </div>
 

@@ -44,12 +44,31 @@ $(document).ready(function () {
         paginateOnScroll: true,
         paginateOnScrollMargin: 20
     });
-    $("body").on("click",".img-show-detail-post",function () {
-         alert("abc");
+    $("body").on("click", ".img-show-detail-post", function () {
+        alert("abc");
     });
     $("#abc").click(function () {
         alert("abcc");
     });
+
+    $("#search-input").on("keyup", function () {
+
+        var searchText = $(this).val();
+        $.ajax({
+            url: $(this).attr("data-ajax-target"),
+            type: 'POST',
+            data: {
+                'search_text': searchText,
+
+            },
+            dataType: 'html',
+            success: function (data) {
+                $("#search-results").html(data);
+            },
+        });
+
+
+    })
 
 
 });

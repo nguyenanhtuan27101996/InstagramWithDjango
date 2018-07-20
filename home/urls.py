@@ -11,5 +11,6 @@ urlpatterns = [
     path('accounts/setting/<str:username>/', views.show_personal_setting, name='personal_setting'),
     path('ajax/create-comment/', views.create_comment, name='create_comment'),
     path('post/<str:username>/<int:id>/', views.show_post_by_id, name='show_detail_post'),
+    path('ajax/search-username/', views.search_user_by_username, name='search_by_username'),
 
 ]

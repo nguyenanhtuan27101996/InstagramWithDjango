@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+{% if user_has_been_found.count > 0 %}
+    <div class="border rounded border-success" style="padding-left: 10px;">
+        <legend><i class="fas fa-search"></i>&nbsp;&nbsp;Search results</legend>
+        {% for user in user_has_been_found %}
+            <li>
+                <a href="{% url 'personal_page' user.username %}">
+                    <img src="{{ user.userprofile.avatar.url }}" width="30px">
+                </a>
+                <a href="{% url 'personal_page' user.username %}" class="a-tag-of-home bold-p-tag-opensans">
+                    {{ user.username }}</a>
+
+            </li>
+        {% endfor %}
+    </div>
+{% else %}
+{% endif %}
+
+</body>
+</html>

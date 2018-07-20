@@ -19,32 +19,32 @@ $(document).ready(function () {
             $(this).attr("disabled", "disabled");
             if(comment != ""){
                 var idPost = $(this).attr("data-id-post");
-                alert(idPost);
-                // $.ajax({
-                //     url: $(this).attr("data-ajax-target"),
-                //     type: 'POST',
-                //     data: {
-                //         'id': idPost,
-                //         'comment': comment
-                //     },
-                //     dataType: 'json',
-                //     success: function (data) {
-                //         htmlElement = "<div class='row'>";
-                //         htmlElement += "<div class='col-md-12'>";
-                //         htmlElement += "<p class='bold-p-tag-opensans'>";
-                //         htmlElement += "<a href='#' class='a-tag-of-home'>";
-                //         htmlElement += "" + data.user_comment + " :</a>&nbsp;&nbsp;&nbsp;"
-                //             + data.body_comment + " ";
-                //         htmlElement += "</p>";
-                //         htmlElement += "</div>";
-                //         htmlElement += "</div>";
-                //         self.closest(".contains-all-comment").find(".contains-comment").prepend(htmlElement);
-                //     },
-                // });
+
+                $.ajax({
+                    url: $(this).attr("data-ajax-target"),
+                    type: 'POST',
+                    data: {
+                        'id': idPost,
+                        'comment': comment
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        htmlElement = "<div class='col-md-12'>";
+                        htmlElement += "<p class='bold-p-tag-opensans'>";
+                        htmlElement += "<a href='#' class='a-tag-of-home'>";
+                        htmlElement += "" + data.user_comment + ":</a>&nbsp;&nbsp;&nbsp;"
+                            + data.body_comment + " ";
+                        htmlElement += "</p>";
+                        htmlElement += "</div>";
+
+                        self.closest(".contains-all-about-post").find(".contains-comment").prepend(htmlElement);
+                    },
+                });
             }
             //Enable the textbox again if needed.
             $(this).removeAttr("disabled");
             $(this).val("");
         }
     });
+
 })
