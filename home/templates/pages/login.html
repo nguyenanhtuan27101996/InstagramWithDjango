@@ -1,0 +1,90 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Login &centerdot; Instagram</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/custom-css-home-page.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        body {
+            background: #FAFAFA;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="min-height: 700px;">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 border" id="div-contain-signup">
+            <p id="text-logo-signup" class="text-font-shadowintrolight text-center">
+                Instagram</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        {% if form.is_bound %}
+                            {% if field.errors %}
+                                {% render_field field class="form-control is-invalid" %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% render_field field class="form-control is-valid" %}
+                            {% endif %}
+                        {% else %}
+                            {% render_field field class="form-control" %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-submit">Log in</button>
+            </form>
+            {% if errors %}
+                <div class="alert alert-warning" role="alert">
+                    <p class="text-center text-p-error">{{ errors }}</p>
+                </div>
+            {% endif %}
+
+
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 border" id="div-contain-hint-login">
+            <p class="text-center normal-text-p">Don't have an account? <a href="{% url 'sign_up' %}">Sign up</a></p>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center" id="div-contain-get-app">
+            <p class="normal-text-p">Get the app.</p>
+            <div class="row" id="div-contains-logo-store">
+                <div class="col-md-6">
+                    <a href="https://itunes.apple.com/app/instagram/id389801252?mt=8&ig_mid=W0Yv0gAEAAHTHpKCulWcwm3DrRxz">
+                        <img src="{% static 'images/sign-up-image/app-store.png' %}">
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DsignupPage%26utm_medium%3Dbadge&ig_mid=W0Yv0gAEAAHTHpKCulWcwm3DrRxz">
+                        <img src="{% static 'images/sign-up-image/google-play.png' %}">
+                    </a>
+                </div>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+</body>
+</html>

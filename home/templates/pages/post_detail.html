@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/custom-css-home-page.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/flexslider.css' %}" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/home_page/one-page-wonder.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            {% for image in images %}
+                                <li>
+                                    <img src="{{ image.photo.url }}" width="400px;">
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row header-list-friend">
+                        <a href="#">
+                            <img class="avatar-user-post-detail"
+                                 src="{{ user_profile.avatar.url }}">
+                        </a>
+                        <a href="#" class="a-tag-of-home">
+                            <p class="profile-text-p"><b>{{ user_profile.user.username }}</b></p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="bold-p-tag-opensans">
+                        <b>{{ user_profile.user.username }}</b>: &nbsp;
+                        {{ post.caption }}
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="max-height: 200px;overflow-y: auto;"
+            >
+                {% for comment in comments %}
+                    <div class="col-md-12">
+                        <p class="bold-p-tag-opensans">
+                            <b>{{ comment.user.username }}</b>: &nbsp;
+                            {{ comment.body }}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 20px;margin-top: 20px;">
+                    <input type="text" class="form-control txt-comment" data-id-post="{{ post.id }}"
+                           placeholder="Write a comment..." data-ajax-target="{% url 'create_comment' %}">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery/jquery.flexslider.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/custom-personal-page.js' %}"></script>
+<script>
+    $('.flexslider').flexslider({
+        animation: "fade"
+    });
+</script>
+</body>
+</html>

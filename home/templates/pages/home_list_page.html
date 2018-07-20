@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/custom-css-home-page.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/flexslider.css' %}" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/home_page/one-page-wonder.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+<body>
+{% load el_pagination_tags %}
+{% lazy_paginate 3 list_image %}
+
+{% for Image in list_image %}
+
+    <div class="row">
+        <div class="col-md-11 div-contain-posts border" style="margin-bottom: 40px;">
+            <div class="row" id="header-post">
+                {% for image in Image %}
+                    {% if forloop.first %}
+                        <a href="{% url 'personal_page' image.post.user.username %}">
+                            <img class="avatar-user-post"
+                                 src="{{ image.post.user.userprofile.avatar.url }}">
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% for image in Image %}
+                    {% if forloop.first %}
+                        <a href="{% url 'personal_page' image.post.user.username %}" class="a-tag-of-home">
+                            <p class="profile-text-p"><b>
+                                {{ image.post.user.username }}
+                            </b></p>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            {% for image in Image %}
+                                <li>
+                                    <img src="{{ image.photo.url }}" width="500px" height="500px"/>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row contains-all-comment" data-value="123">
+                <div class="col-md-12">
+                    <a class="a-tag-of-home"><i class="far fa-heart" style="cursor: pointer"></i></a>
+                </div>
+                <div class="col-md-12">
+                    <p class="bold-p-tag-opensans">Count likes</p>
+                </div>
+                <div class="col-md-12">
+                    <p class="small-p-tag-gray-color">
+                        {% for image in Image %}
+                            {% if forloop.first %}
+                                {{ image.post.time_posted }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <p class="bold-p-tag-opensans">
+                        {% for image in Image %}
+                            {% if forloop.first %}
+                                <a href="{% url 'personal_page' image.post.user.username %}" class="a-tag-of-home">
+                                    {{ image.post.user.username }}:
+                                </a>&nbsp;&nbsp;
+                            {% endif %}
+                        {% endfor %}
+                        {% for image in Image %}
+                            {% if forloop.first %}
+                                {{ image.post.caption }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+
+                <div class="contains-comment col-md-12"
+                {% for image in Image %}
+                    {% if forloop.first %}
+                        data-id-post="{{ image.post.id }}"
+                    {% endif %}
+                {% endfor %}
+                style="max-height: 214px;overflow-y: auto;">
+                    {#                display comment by id of the post -> hard#}
+                    {% for image in Image %}
+                        {% if forloop.first %}
+                            {% with image.post.id as post_id %}
+                                {% for Comment in list_comment %}
+                                    {% for comment in Comment %}
+                                        {% if comment.post.id == post_id %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p class="bold-p-tag-opensans">
+                                                        <a href="#" class="a-tag-of-home">
+                                                            {{ comment.user.username }}:</a>
+                                                        &nbsp;&nbsp;&nbsp;{{ comment.body }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                    {#                end display comment by id of the post#}
+
+                </div>
+
+                <div class="col-md-12" style="margin-bottom: 20px;margin-top: 20px;">
+                    <input type="text" class="form-control txt-comment"
+                           placeholder="Write a comment..." data-ajax-target="{% url 'create_comment' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% show_more %}
+
+<script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery/jquery.flexslider.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery/jquery.formset.js' %}"></script>
+<script src="{% static 'js/custom1.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+.text-font-shadowintrolight{
+   font-family: 'Shadows Into Light', cursive;
+}
+#img-logo-web{
+    width: 30px;
+    height: 30px;
+}
+#div-contain-signup{
+    margin-top: 30px;
+    background: #FFFFFF;
+}
+.shadow-div{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.btn-submit{
+    margin-bottom: 20px;
+    width: 100%;
+
+}
+#text-logo-signup{
+    margin-top: 20px;
+    font-size: 36px;
+    font-weight: bold;
+}
+#text-sub-logo{
+    font-size: 18px;
+    color: #999999;
+    font-weight: bold;
+    font-family: 'Roboto', cursive;
+}
+#text-verify-policy{
+    color: #999999;
+}
+#div-contain-hint-login{
+    margin-top: 20px;
+    background: #FFFFFF;
+    min-height: 70px;
+    line-height: 70px;
+}
+.normal-text-p{
+    font-weight: normal;
+    font-size: 14px;
+    font-family: 'Roboto', cursive;
+}
+#div-contain-get-app{
+    margin-top: 20px;
+}
+#div-contains-logo-store img{
+
+    width: 160px;
+    height: 50px;
+}
+.text-p-error{
+    color: #A70E1A;
+    font-family: 'Roboto', cursive;
+    font-weight: normal;
+}
+.far{
+    font-size: 25px !important;
+}
+.user-avatar-img{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+.profile-text-p{
+    font-weight: normal;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+.div-contain-posts{
+    background: #FFFFFF;
+}
+.avatar-user-post{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin: 5px 15px 5px 15px;
+}
+#header-post{
+    height: 60px;
+    line-height: 60px;
+}
+.a-tag-of-home{
+    text-decoration: none !important;
+    color: #000;
+}
+.a-tag-of-home:hover{
+    text-decoration: none !important;
+    color: #000;
+}
+#txt-comment{
+    margin-bottom: 20px;
+}
+.p-tag-gray-color{
+    color: #999999;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+.small-p-tag-gray-color{
+    color: #999999;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+
+}
+.bold-p-tag-opensans{
+    font-weight: bold;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+
+}
+.avatar-user-friends{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin: 5px 15px 5px 15px;
+}
+.header-list-friend{
+    height: 50px;
+    line-height: 50px;
+}
+.avatar-user-personal-page{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+.big-bold-p-tag-opensans{
+    font-weight: bold;
+    font-size: 24px;
+    font-family: 'Open Sans', sans-serif;
+}
+.p-tag-setting{
+    cursor: pointer;
+
+}
+.active-p-bold{
+    font-weight: bold;
+    font-size: 110%;
+}
+.avatar-user-setting{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+.p-username-setting{
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+}
+.p-link-to{
+    color: #485fdb;
+
+}
+.img-change-photo-profile{
+    cursor: pointer;
+    opacity: 1;
+
+}
+.img-change-photo-profile:hover{
+    opacity: 0.7;
+    -webkit-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    transform: scale(1.03);
+}
+.distance-bottom-20{
+    margin-bottom: 20px;
+}
+.modal-body {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+}
+
+.avatar-user-post-detail{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}

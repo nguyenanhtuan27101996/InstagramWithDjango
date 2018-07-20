@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Instagram</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/custom-css-home-page.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home_page/flexslider.css' %}" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/home_page/one-page-wonder.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <style>
+        body {
+            background: #FAFAFA;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand text-font-shadowintrolight" href="{% url 'home' %}" style="margin-right: 60px;">
+                <img id="img-logo-web" src="{% static 'images/logo-web/instagram-logo.png' %}">
+                | Instagram</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <form class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search" aria-label="Search"
+                           aria-describedby="basic-addon1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </form>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <a class="nav-link text-center" href="{% url 'sign_up' %}"><i class="far fa-compass"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="{% url 'sign_up' %}"><i class="far fa-heart"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="{% url 'personal_page' user.username %}"><i
+                                class="far fa-user"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container" style="margin-top: 150px;">
+
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <div class="row distance-bottom-20">
+                <div class="col-md-12">
+                    <button class="btn btn-light border" data-toggle="modal" data-target="#modal-createpost">Create your
+                        post
+                        &nbsp;&nbsp;<i class="fas fa-pencil-alt"></i>
+                    </button>
+                </div>
+
+            </div>
+            {% load el_pagination_tags %}
+{#            {% include 'pages/home_list_page.html' %}#}
+            {% include page_template %}
+
+
+        </div>
+        <div class="col-md-4 col-sm-0">
+            <div class="row border-bottom">
+
+                <div class="col-md-3">
+                    <a href="{% url 'personal_page' user_profile.user.username %}">
+                        {% if user_profile.avatar %}
+                            <img class="user-avatar-img" src="{{ user_profile.avatar.url }}">
+                        {% else %}
+                            <img class="user-avatar-img" src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-md-7">
+
+                    {% if user.username %}
+                        <a href="{% url 'personal_page' user_profile.user.username %}" class="a-tag-of-home">
+                            <p class="profile-text-p"><b>{{ user.username }}</b></p>
+                        </a>
+                        <p class="profile-text-p">{{ user.first_name }} {{ user.last_name }}</p>
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-2 text-right">
+                    <a href="{% url 'logout' %}"><img src="{% static 'images/logout-img.png' %}"
+                                                      title="Log out" height="30px"></a>
+                </div>
+            </div>
+
+            <div class="row border-bottom"
+                 style="margin-top: 10px;min-height: 300px; max-height: 400px;overflow: scroll">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="p-tag-gray-color">Friends</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row header-list-friend">
+                                <a href="#">
+                                    <img class="avatar-user-friends"
+                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
+                                </a>
+                                <a href="#" class="a-tag-of-home">
+                                    <p class="profile-text-p"><b>Username of friend</b></p>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{#contain modal boostrap#}
+<div class="modal" id="modal-createpost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create your post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{ post_form.caption }}
+                    </div>
+                    <div class="form-group">
+                        {{ formset.management_form }}
+                        {% for form in formset %}
+                            <div class="individual-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-primary btn-block">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery/jquery.flexslider.js' %}"></script>
+<script src="{% static 'js/jquery/el-pagination.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery/jquery.formset.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>
