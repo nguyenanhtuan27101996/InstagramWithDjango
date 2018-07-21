@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .models import User, UserProfile, Post, Image, Comment
+from .models import User, UserProfile, Post, Image, Comment, Like
 from el_pagination.decorators import page_template
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -45,13 +45,16 @@ def show_home_page(request, template='pages/home.html', extra_context=None):
     #load post and image of post to home page
     list_image = []
     list_comment = []
+    list_like = []
     post = Post.objects.all().order_by('-time_posted')
 
     for p in post:
         image = Image.objects.all().filter(post=p)
         comment = Comment.objects.all().filter(post=p).order_by('-time_commented')
+        like = Like.objects.all().filter(post=p)
         list_image.append(image)
         list_comment.append(comment)
+        list_like.append(like)
 
     context = {
         'user_profile': user_profile,
@@ -59,7 +62,7 @@ def show_home_page(request, template='pages/home.html', extra_context=None):
         'formset': formset,
         'list_image': list_image,
         'list_comment': list_comment,
-        'Posts': post
+        'list_like': list_like,
     }
     if extra_context is not None:
         context.update(extra_context)
@@ -89,6 +92,29 @@ def search_user_by_username(request):
     else:
         user = None
     return render(request, 'pages/ajax_search_username.html', {'user_has_been_found': user})
+
+
+@csrf_exempt
+def solve_user_hit_like(request):
+    id_post = request.POST.get('id', False)
+    username_hit_like = request.POST.get('username_hit_like', False)
+    post = Post.objects.get(id=id_post)
+    user = User.objects.get(username=username_hit_like)
+
+    data = {}
+    like = Like.objects.filter(user=user, post=post)
+
+    if like.exists():
+        like.delete()
+        data['is_valid'] = False
+        data['sum_like'] = Like.objects.all().filter(post=post).count()
+    else:
+        like = Like(user=user, post=post)
+        like.save()
+        data['is_valid'] = True
+        data['sum_like'] = Like.objects.all().filter(post=post).count()
+
+    return JsonResponse(data)
 
 
 def signup_account(request):

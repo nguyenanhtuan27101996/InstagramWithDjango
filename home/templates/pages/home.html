@@ -47,14 +47,10 @@
             </button>
             <form class="form-inline">
                 <div class="input-group">
-                    <div class="dropdown">
-                        {% csrf_token %}
-                        <input type="text" placeholder="Search.." id="search-input"
-                        data-ajax-target="{% url 'search_by_username' %}" class="form-control">
-                    </div>
-
+                    {% csrf_token %}
+                    <input type="text" placeholder="Search..." id="search-input"
+                           data-ajax-target="{% url 'search_by_username' %}" class="form-control">
                 </div>
-
             </form>
             <script>
 

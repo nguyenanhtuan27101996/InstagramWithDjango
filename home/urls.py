@@ -12,5 +12,5 @@ urlpatterns = [
     path('ajax/create-comment/', views.create_comment, name='create_comment'),
     path('post/<str:username>/<int:id>/', views.show_post_by_id, name='show_detail_post'),
     path('ajax/search-username/', views.search_user_by_username, name='search_by_username'),
-
+    path('ajax/hit-like/', views.solve_user_hit_like, name='solve_user_hit_like'),
 ]

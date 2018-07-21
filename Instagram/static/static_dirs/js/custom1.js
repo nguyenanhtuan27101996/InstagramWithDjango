@@ -6,14 +6,14 @@ $(document).ready(function () {
         paginateOnScroll: true,
         paginateOnScrollMargin: 20
     });
-    $("body").on("keypress",".txt-comment",function (e) {
+    $("body").on("keypress", ".txt-comment", function (e) {
         var self = $(this)
         if (e.which === 13) {
             var comment = $(this).val();
 
             //Disable textbox to prevent multiple submit
             $(this).attr("disabled", "disabled");
-            if(comment != ""){
+            if (comment != "") {
                 var idPost = $(this).closest(".contains-all-comment")
                     .find(".contains-comment").attr("data-id-post");
 
@@ -44,5 +44,43 @@ $(document).ready(function () {
             $(this).val("");
         }
     });
+
+    $("body").on("click", ".btn-like-post", function () {
+        var usernameHitLike = $(this).closest("div").attr("data-user-like");
+        var idPost = $(this).closest("div").attr("data-id-post");
+        var self = $(this)
+        $.ajax({
+            url: $(this).attr("data-ajax-target"),
+            type: 'POST',
+            data: {
+                'id': idPost,
+                'username_hit_like': usernameHitLike
+            },
+            dataType: 'json',
+            success: function (data) {
+                if(data.is_valid){
+                    self.find("span").css({
+                        'color': 'blue',
+                    });
+                    self.find("i").removeClass("far fa-thumbs-up");
+                    self.find("i").addClass("fas fa-thumbs-up");
+                    self.closest(".contains-all-comment")
+                        .find(".contains-sum-likes").text(""+data.sum_like+" likes");
+
+                }else{
+                     self.find("span").css({
+                        'color': 'black',
+                    });
+                    self.find("i").removeClass("fas fa-thumbs-up");
+                    self.find("i").addClass("far fa-thumbs-up");
+                    self.closest(".contains-all-comment")
+                        .find(".contains-sum-likes").text(""+data.sum_like+" likes");
+                }
+
+            },
+        });
+
+
+    })
 
 });

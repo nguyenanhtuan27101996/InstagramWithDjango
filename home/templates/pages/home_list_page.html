@@ -66,11 +66,59 @@
 
 
             <div class="row contains-all-comment">
-                <div class="col-md-12">
-                    <a class="a-tag-of-home"><i class="far fa-heart" style="cursor: pointer"></i></a>
+                <div class="col-md-12"
+                        {% for image in Image %}
+                            {% if forloop.first %}
+                     data-id-post="{{ image.post.id }}"
+                     data-user-like="{{ request.user.username }}"
+                            {% endif %}
+                        {% endfor %}
+                >
+                    {% for image in Image %}
+                        {% if forloop.first %}
+
+                            {% for Like in list_like %}
+                                {% for like in Like %}
+                                    {% if request.user.id == like.user.id and image.post.id == like.post.id %}
+                                        <a class="a-tag-of-home bold-p-tag-opensans btn-like-post"
+                                           style="cursor: pointer"
+                                           data-ajax-target="{% url 'solve_user_hit_like' %}">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <span style="color: blue;">Like</span>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
+                        {% endif %}
+                    {% endfor %}
+                    <a class="a-tag-of-home bold-p-tag-opensans btn-like-post"
+                       style="cursor: pointer"
+                       data-ajax-target="{% url 'solve_user_hit_like' %}">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>Like</span>
+                    </a>
+
                 </div>
-                <div class="col-md-12">
-                    <p class="bold-p-tag-opensans">Count likes</p>
+                <div class="col-md-12" style="margin-top: 5px;">
+                    <p class="bold-p-tag-opensans contains-sum-likes">
+                        {#                        display sum likes of post by post id#}
+                        {% for image in Image %}
+                            {% if forloop.first %}
+                                {% for Like in list_like %}
+                                    {% for like in Like %}
+                                        {% if like.post.id == image.post.id %}
+                                            {% if forloop.first %}
+                                                {% if Like|length > 0 %}
+                                                    {{ Like|length }} likes
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
                 </div>
                 <div class="col-md-12">
                     <p class="small-p-tag-gray-color">
@@ -99,12 +147,12 @@
                 </div>
 
                 <div class="contains-comment col-md-12"
-                {% for image in Image %}
-                    {% if forloop.first %}
-                        data-id-post="{{ image.post.id }}"
-                    {% endif %}
-                {% endfor %}
-                style="max-height: 214px;overflow-y: auto;">
+                        {% for image in Image %}
+                            {% if forloop.first %}
+                     data-id-post="{{ image.post.id }}"
+                            {% endif %}
+                        {% endfor %}
+                     style="max-height: 214px;overflow-y: auto;">
                     {#                display comment by id of the post -> hard#}
                     {% for image in Image %}
                         {% if forloop.first %}
