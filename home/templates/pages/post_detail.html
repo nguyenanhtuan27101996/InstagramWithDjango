@@ -38,7 +38,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-md-5 contains-all-about-post">
             <div class="row">
@@ -56,12 +55,26 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row" style="max-height: 200px;overflow-y: auto;">
+                <div class="col-md-12 contains-caption">
                     <p class="bold-p-tag-opensans">
                         <b>{{ user_profile.user.username }}</b>: &nbsp;
-                        {{ post.caption }}
+                        <span class="span-contains-caption" data-id-post="{{ post.id }}">{{ post.caption }}</span>
+                        {% if request.user.username == post.user.username %}
+                            <span class="btn-popup-edit-caption" style="margin-left: 10px;cursor: pointer">
+                                <i class="fas fa-pencil-alt"></i>
+                            </span>
+                            <div class="edit-caption-form" style="display: none;">
+                                <textarea class="form-control" id="txt-caption"></textarea>
+                                <span class="small-p-tag-blue-color btn-confirm-edit"
+                                      data-ajax-target="{% url 'update_caption' %}">Edit</span>
+                                &nbsp;&nbsp;
+                                <span class="small-p-tag-blue-color btn-cancel-edit">Cancel</span>
+                            </div>
+                        {% endif %}
+
                     </p>
+
                 </div>
             </div>
             <hr>

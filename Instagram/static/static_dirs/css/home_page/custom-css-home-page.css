@@ -257,5 +257,11 @@
     margin-right: 15px;
 }
 
-
+.small-p-tag-blue-color{
+    color: #5286db;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+}
 

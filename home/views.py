@@ -117,6 +117,33 @@ def solve_user_hit_like(request):
     return JsonResponse(data)
 
 
+@csrf_exempt
+def update_caption_of_post(request):
+    id_post = request.POST.get('id', False)
+    new_caption = request.POST.get('caption', False)
+    post = Post.objects.get(id=id_post)
+    post.caption = new_caption
+    post.save()
+
+    data = {
+        'new_caption': post.caption,
+    }
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def delete_post(request):
+    id_post = request.POST.get('id', False)
+    post = Post.objects.get(id=id_post)
+    data = {}
+    if post.delete():
+        data['is_valid'] = True
+    else:
+        data['is_valid'] = False
+
+    return JsonResponse(data)
+
+
 def signup_account(request):
     form = RegistationForm()
     if request.method == 'POST':
