@@ -117,31 +117,28 @@ $(document).ready(function () {
             });
         });
     });
-    // $("body").on("click", ".btn-open-delete-post", function () {
-    //     $(this).closest(".header-list-friend").find("#modalDeletePost").modal("show");
-    //     var idPost = $(this).attr("data-id-post");
-    //     var self = $(this);
-    //     self.closest(".header-list-friend").find(".btn-delete-post").click(function () {
-    //         var dataAjaxTarget = self.closest(".header-list-friend")
-    //             .find(".btn-delete-post").attr("data-ajax-target");
-    //         $.ajax({
-    //             url: dataAjaxTarget,
-    //             type: 'POST',
-    //             data: {
-    //                 'id': idPost,
-    //
-    //             },
-    //             dataType: 'json',
-    //             success: function (data) {
-    //                 if (data.is_valid) {
-    //                     // alert("Deleted successfully!");
-    //
-    //
-    //                 }
-    //             },
-    //         });
-    //     });
-    //
-    // });
+
+    $("#btn-follow").click(function () {
+        var followerUsername = $(this).attr("data-follower-user");
+        var followedUsername = $(this).attr("data-followed-user");
+        $.ajax({
+            url: $(this).attr("data-ajax-target"),
+            type: 'POST',
+            data: {
+                'follower_username': followerUsername,
+                'followed_username': followedUsername
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_valid) {
+                    alert("followed");
+                }else{
+                    alert("unfollowed");
+                }
+
+
+            },
+        });
+    });
 
 })

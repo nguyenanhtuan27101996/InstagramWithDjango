@@ -99,10 +99,13 @@
                 </div>
                 <div class="col-md-7">
                     {% if request.path|cut:'/' != request.user.username %}
-                        <a href="">
-                            <button class="btn btn-outline-dark" style="margin-bottom: 20px;width: 200px;">
-                                Follow&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-user-plus"></i></button>
-                        </a>
+                        <button class="btn btn-outline-dark" id="btn-follow" style="margin-bottom: 20px;width: 200px;"
+                        data-follower-user="{{ request.user.username }}"
+                        data-followed-user="{{ user_profile.user.username }}"
+                        data-ajax-target="{% url 'follow_user' %}">
+                                Follow&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-user-plus"></i>
+                        </button>
+
                     {% else %}
                         <a href="{% url 'personal_setting' user_profile.user.username %}">
                             <button class="btn btn-outline-dark" style="margin-bottom: 20px;width: 200px;">

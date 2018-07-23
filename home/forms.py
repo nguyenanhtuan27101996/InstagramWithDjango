@@ -78,8 +78,8 @@ class RegistationForm(forms.Form):
         User.objects.create_user(self.cleaned_data['username'],
                                  self.cleaned_data['email'],
                                  self.cleaned_data['password1'],
-                                 first_name= self.cleaned_data['first_name'],
-                                 last_name= self.cleaned_data['last_name'])
+                                 first_name=self.cleaned_data['first_name'],
+                                 last_name=self.cleaned_data['last_name'])
 #form login
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30, widget=forms.TextInput(

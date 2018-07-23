@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .models import User, UserProfile, Post, Image, Comment, Like
+from .models import User, UserProfile, Post, Image, Comment, Like, UserFollow
 from el_pagination.decorators import page_template
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -113,6 +113,27 @@ def solve_user_hit_like(request):
         like.save()
         data['is_valid'] = True
         data['sum_like'] = Like.objects.all().filter(post=post).count()
+
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def follow_user(request):
+    follower_username = request.POST.get('follower_username', False)
+    followed_username = request.POST.get('followed_username', False)
+
+    follower_user = User.objects.get(username=follower_username)
+    followed_user = User.objects.get(username=followed_username)
+    data = {}
+    user_follow = UserFollow.objects.filter(follower_user=follower_user, followed_user=followed_user)
+
+    if user_follow.exists():
+        user_follow.delete()
+        data['is_valid'] = False
+    else:
+        user_follow = UserFollow(follower_user=follower_user, followed_user=followed_user)
+        user_follow.save()
+        data['is_valid'] = True
 
     return JsonResponse(data)
 
