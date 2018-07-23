@@ -41,56 +41,60 @@
 
                 {% for image in Image %}
                     {% if forloop.first %}
-                            <p class="profile-text-p">
-                                <b>
+                        <p class="profile-text-p">
+                            <b>
                                 <div class="header-of-each-post">
-                                {% if request.user.username == image.post.user.username %}
-                                    <a href="{% url 'personal_page' image.post.user.username %}" class="a-tag-of-home">
-                                    {{ image.post.user.username }}
-                                    </a>
-                                    <span class="btn-open-delete-post" style="margin-left: 550px;cursor: pointer;"
-                                    data-id-post="{{ image.post.id }}">
+                                    {% if request.user.username == image.post.user.username %}
+                                        <a href="{% url 'personal_page' image.post.user.username %}"
+                                           class="a-tag-of-home">
+                                            {{ image.post.user.username }}
+                                        </a>
+                                        <span class="btn-open-delete-post" style="margin-left: 550px;cursor: pointer;"
+                                              data-id-post="{{ image.post.id }}">
                                         <i class="fas fa-times-circle"></i>
                                     </span>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalDeletePost" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h6 class="modal-title" id="exampleModalLongTitle">Delete Post</h6>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalDeletePost" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h6 class="modal-title" id="exampleModalLongTitle">Delete
+                                                            Post</h6>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
                                                     <span style="font-family: Roboto, sans-serif;font-weight: lighter;
                                                     font-size: 15px;">
                                                         This will be removed from your timeline.
                                                         You can edit this post if you want to
                                                         change something.
                                                     </span>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-outline-secondary"
-                                                            data-dismiss="modal">Close
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-delete-post"
-                                                    data-ajax-target="{% url 'delete_post' %}">
-                                                        Delete</button>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                                data-dismiss="modal">Close
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-delete-post"
+                                                                data-ajax-target="{% url 'delete_post' %}">
+                                                            Delete
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% else %}
-                                    <a href="{% url 'personal_page' image.post.user.username %}" class="a-tag-of-home">
-                                        {{ image.post.user.username }}
-                                    </a>
-                                {% endif %}
+                                    {% else %}
+                                        <a href="{% url 'personal_page' image.post.user.username %}"
+                                           class="a-tag-of-home">
+                                            {{ image.post.user.username }}
+                                        </a>
+                                    {% endif %}
                                 </div>
-                                </b>
-                            </p>
+                            </b>
+                        </p>
                     {% endif %}
                 {% endfor %}
 
@@ -137,6 +141,8 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
+
+
                         {% endif %}
                     {% endfor %}
 
@@ -194,7 +200,7 @@
                                         &nbsp;&nbsp;
                                         <span class="small-p-tag-blue-color btn-cancel-edit">Cancel</span>
                                     </div>
-                                    {% else %}
+                                {% else %}
                                     {{ image.post.caption }}
                                 {% endif %}
 

@@ -118,27 +118,6 @@ $(document).ready(function () {
         });
     });
 
-    $("#btn-follow").click(function () {
-        var followerUsername = $(this).attr("data-follower-user");
-        var followedUsername = $(this).attr("data-followed-user");
-        $.ajax({
-            url: $(this).attr("data-ajax-target"),
-            type: 'POST',
-            data: {
-                'follower_username': followerUsername,
-                'followed_username': followedUsername
-            },
-            dataType: 'json',
-            success: function (data) {
-                if (data.is_valid) {
-                    alert("followed");
-                }else{
-                    alert("unfollowed");
-                }
 
-
-            },
-        });
-    });
 
 })

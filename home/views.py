@@ -207,12 +207,26 @@ def show_personal_page(request, username, template='pages/personal_page.html', e
     #load post of this user to personal page
     post = Post.objects.all().filter(user=user).order_by('-time_posted')
     list_image = []
+    count_post_of_user = Post.objects.all().filter(user=user).count();
+    user_follow = UserFollow.objects.filter(follower_user=request.user, followed_user=user).first()
+
+    #comment bang tieng viet vi kho
+    #count_follower la dem so nguoi dang theo doi user nay
+    #dem xem userfollow nay co was followed by others user bao nhieu lan
+    count_follower = UserFollow.objects.filter(followed_user=user).count()
+    #cout_following la dem so nguoi user nay dang theo doi
+    #dem xem user nay la nguoi di follow (follower) bao nhieu lan
+    count_following = UserFollow.objects.filter(follower_user=user).count()
     for p in post:
         image = Image.objects.all().filter(post=p)
         list_image.append(image)
     context = {
         'user_profile': user_profile,
         'list_image': list_image,
+        'count_post_of_user': count_post_of_user,
+        'user_follow': user_follow,
+        'count_follower': count_follower,
+        'count_following': count_following,
     }
     if extra_context is not None:
         context.update(extra_context)
