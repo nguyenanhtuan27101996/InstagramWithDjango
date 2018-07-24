@@ -16,13 +16,13 @@ $(document).ready(function () {
                     self.fadeOut("normal");
                     self.fadeIn("normal");
                     self.html("Following&nbsp;&nbsp;&nbsp;&nbsp;<i class='fas fa-check'></i>");
+                    $("#count-follower").text(data.count_follower_of_user);
                 } else {
                     self.fadeOut("normal");
                     self.fadeIn("normal");
                     self.html("Follow&nbsp;&nbsp;&nbsp;&nbsp;<i class='fas fa-user-plus'></i>");
+                    $("#count-follower").text(data.count_follower_of_user);
                 }
-
-
             },
         });
     });

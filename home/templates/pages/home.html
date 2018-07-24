@@ -98,7 +98,6 @@
         </div>
         <div class="col-md-4 col-sm-0">
             <div class="row border-bottom">
-
                 <div class="col-md-3">
                     <a href="{% url 'personal_page' user_profile.user.username %}">
                         {% if user_profile.avatar %}
@@ -124,106 +123,56 @@
                                                       title="Log out" height="30px"></a>
                 </div>
             </div>
-
-            <div class="row border-bottom"
-                 style="margin-top: 10px;min-height: 300px; max-height: 400px;overflow: scroll">
+            <div class="row"
+                 style="margin-top: 10px;min-height: 350px; max-height: 400px;overflow-y: scroll">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <p class="p-tag-gray-color">Friends</p>
+                        <div class="col-md-6 border-right">
+                            <p class="p-tag-gray-color">Following ({{ users_followed_by_request_user|length }})</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="p-tag-gray-color">Follower ({{ users_following_request_user|length }})</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
+                        <div class="col-md-6 border-right">
+                            {% for user_follow in users_followed_by_request_user %}
+                                <div class="col-md-12">
+                                    <div class="row header-list-friend">
+                                        <a href="{% url 'personal_page' user_follow.followed_user.username %}">
+                                            <img class="avatar-user-friends"
+                                                 src="{{ user_follow.followed_user.userprofile.avatar.url }}">
+                                        </a>
+                                        <a href="{% url 'personal_page' user_follow.followed_user.username %}"
+                                           class="a-tag-of-home">
+                                            <p class="profile-text-p"><b>{{ user_follow.followed_user.username }}</b>
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row header-list-friend">
-                                <a href="#">
-                                    <img class="avatar-user-friends"
-                                         src="{% static 'images/empty_avatar-300x300.jpg' %}">
-                                </a>
-                                <a href="#" class="a-tag-of-home">
-                                    <p class="profile-text-p"><b>Username of friend</b></p>
-                                </a>
-                            </div>
+                        <div class="col-md-6">
+                            {% for user_follow in users_following_request_user %}
+                                <div class="col-md-12">
+                                    <div class="row header-list-friend">
+                                        <a href="{% url 'personal_page' user_follow.follower_user.username %}">
+                                            <img class="avatar-user-friends"
+                                                 src="{{ user_follow.follower_user.userprofile.avatar.url }}">
+                                        </a>
+                                        <a href="{% url 'personal_page' user_follow.follower_user.username %}"
+                                           class="a-tag-of-home">
+                                            <p class="profile-text-p"><b>{{ user_follow.follower_user.username }}</b>
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
 
                     </div>
+
+
                 </div>
             </div>
         </div>

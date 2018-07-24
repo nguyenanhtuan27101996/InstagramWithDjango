@@ -118,6 +118,32 @@ $(document).ready(function () {
         });
     });
 
+    $("body").on("click",".btn-like-post",function () {
+        var idPost = $(this).attr("data-id-post");
+        var usernameHitLike = $(this).attr("data-user-like");
+        var self = $(this);
+        $.ajax({
+            url: $(this).attr("data-ajax-target"),
+            type: 'POST',
+            data: {
+                'id': idPost,
+                'username_hit_like': usernameHitLike
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_valid) {
+                    self.find("span").remove();
+                    newElementSpan = "<span style='color: blue;'>Liked</span>";
+                    self.append(newElementSpan);
+                    self.closest(".display-like-post")
+                        .find(".contains-sum-likes").text("" + data.sum_like + " likes");
+                } else {
+                     self.find("span").remove();
+                     self.closest(".display-like-post")
+                        .find(".contains-sum-likes").text("" + data.sum_like + " likes");
+                }
+            },
+        });
+    });
 
-
-})
+});

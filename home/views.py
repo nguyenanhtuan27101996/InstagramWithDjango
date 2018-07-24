@@ -56,6 +56,8 @@ def show_home_page(request, template='pages/home.html', extra_context=None):
         list_comment.append(comment)
         list_like.append(like)
 
+    users_followed_by_request_user = UserFollow.objects.filter(follower_user=request.user)
+    users_following_request_user = UserFollow.objects.filter(followed_user=request.user)
     context = {
         'user_profile': user_profile,
         'post_form': post_form,
@@ -63,6 +65,8 @@ def show_home_page(request, template='pages/home.html', extra_context=None):
         'list_image': list_image,
         'list_comment': list_comment,
         'list_like': list_like,
+        'users_followed_by_request_user': users_followed_by_request_user,
+        'users_following_request_user': users_following_request_user,
     }
     if extra_context is not None:
         context.update(extra_context)
@@ -79,7 +83,8 @@ def create_comment(request):
     comment.save()
     data = {
         'user_comment': comment.user.username,
-        'body_comment': comment.body
+        'body_comment': comment.body,
+        'id_comment': comment.id,
     }
     return JsonResponse(data)
 
@@ -129,11 +134,15 @@ def follow_user(request):
 
     if user_follow.exists():
         user_follow.delete()
+        count_follower_of_user = UserFollow.objects.filter(followed_user=followed_user).count()
         data['is_valid'] = False
+        data['count_follower_of_user'] = count_follower_of_user
     else:
         user_follow = UserFollow(follower_user=follower_user, followed_user=followed_user)
         user_follow.save()
+        count_follower_of_user = UserFollow.objects.filter(followed_user=followed_user).count()
         data['is_valid'] = True
+        data['count_follower_of_user'] = count_follower_of_user
 
     return JsonResponse(data)
 
@@ -149,6 +158,33 @@ def update_caption_of_post(request):
     data = {
         'new_caption': post.caption,
     }
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def update_comment_of_post(request):
+    id_comment = request.POST.get('id', False)
+    new_body_comment = request.POST.get('body', False)
+    comment = Comment.objects.get(id=id_comment)
+    comment.body = new_body_comment
+    comment.save()
+
+    data = {
+        'new_comment': comment.body
+    }
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def delete_comment_of_post(request):
+    id_comment = request.POST.get('id', False)
+    comment = Comment.objects.get(id=id_comment)
+    data = {}
+    if comment.delete():
+        data['is_valid'] = True
+    else:
+        data['is_valid'] = False
+
     return JsonResponse(data)
 
 
@@ -241,10 +277,13 @@ def show_post_by_id(request, username, id):
     user_profile = UserProfile.objects.get(user=user)
     images = Image.objects.all().filter(post=post)
     comments = Comment.objects.all().filter(post=post).order_by('-time_commented')
+    likes = Like.objects.all().filter(post=post)
     return render(request, 'pages/post_detail.html', {'post': post,
                                                       'images': images,
                                                       'comments': comments,
-                                                      'user_profile': user_profile})
+                                                      'user_profile': user_profile,
+                                                      'likes': likes,
+                                                      })
 
 
 @login_required(login_url='/accounts/login/')

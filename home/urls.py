@@ -15,5 +15,7 @@ urlpatterns = [
     path('ajax/hit-like/', views.solve_user_hit_like, name='solve_user_hit_like'),
     path('ajax/update-caption', views.update_caption_of_post, name='update_caption'),
     path('ajax/delete-post/', views.delete_post, name='delete_post'),
-    path('ajax/follow-user', views.follow_user, name='follow_user'),
+    path('ajax/follow-user/', views.follow_user, name='follow_user'),
+    path('ajax/update-comment/', views.update_comment_of_post, name='update_comment'),
+    path('ajax/delete-comment/', views.delete_comment_of_post, name='delete_comment'),
 ]
