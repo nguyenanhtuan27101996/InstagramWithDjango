@@ -112,7 +112,68 @@
                     <div class="col-md-12">
                         <p class="bold-p-tag-opensans">
                             <a class="a-tag-of-home">{{ comment.user.username }}</a>: &nbsp;
-                            {{ comment.body }}
+                            {% if request.user.username == comment.user.username %}
+                                <span class="span-contains-comment" id="span-contains-comment"
+                                      data-id-comment="{{ comment.id }}"
+                                >{{ comment.body }}</span>
+                                <span class="btn-popup-edit-comment"
+                                      style="margin-left: 10px;cursor: pointer">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                                <span class="btn-popup-delete-comment"
+                                      style="margin-left: 10px;cursor: pointer">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalDeleteComment"
+                                     tabindex="-1"
+                                     role="dialog"
+                                     aria-labelledby="exampleModalCenterTitle"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered"
+                                         role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title"
+                                                    id="exampleModalLongTitle">Delete
+                                                    Comment</h6>
+                                                <button type="button" class="close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <span>
+                                                    Are you sure that you want to delete this comment?
+                                                </span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-outline-secondary"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-danger btn-delete-comment"
+                                                        data-ajax-target="{% url 'delete_comment' %}">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit-comment-form" style="display: none;">
+                                    <textarea class="form-control" id="txt-edit-comment"></textarea>
+                                    <span class="small-p-tag-blue-color btn-confirm-edit-comment"
+                                          data-ajax-target="{% url 'update_comment' %}">Edit</span>
+                                    &nbsp;&nbsp;
+                                    <span class="small-p-tag-blue-color btn-cancel-edit-comment">Cancel</span>
+                                </div>
+
+                            {% else %}
+                                {{ comment.body }}
+                            {% endif %}
+
                         </p>
                     </div>
                 {% endfor %}
@@ -121,7 +182,8 @@
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 20px;margin-top: 20px;">
                     <input type="text" class="form-control txt-comment" data-id-post="{{ post.id }}"
-                           placeholder="Write a comment..." data-ajax-target="{% url 'create_comment' %}">
+                           placeholder="Write a comment..." data-ajax-target="{% url 'create_comment' %}"
+                    data-ajax-target1="{% url 'update_comment' %}" data-ajax-target2="{% url 'delete_comment' %}">
 
                 </div>
             </div>

@@ -17,6 +17,7 @@ $(document).ready(function () {
                 var idPost = $(this).closest(".contains-all-comment")
                     .find(".contains-comment").attr("data-id-post");
                 var urlUpdateComment = $(this).attr("data-ajax-target1");
+                var urlDeleteComment = $(this).attr("data-ajax-target2");
                 $.ajax({
                     url: $(this).attr("data-ajax-target"),
                     type: 'POST',
@@ -26,15 +27,6 @@ $(document).ready(function () {
                     },
                     dataType: 'json',
                     success: function (data) {
-                        // htmlElement = "<div class='row'>";
-                        // htmlElement += "<div class='col-md-12'>";
-                        // htmlElement += "<p class='bold-p-tag-opensans'>";
-                        // htmlElement += "<a href='#' class='a-tag-of-home'>";
-                        // htmlElement += "" + data.user_comment + " :</a>&nbsp;&nbsp;&nbsp;"
-                        //     + data.body_comment + " ";
-                        // htmlElement += "</p>";
-                        // htmlElement += "</div>";
-                        // htmlElement += "</div>";
                         htmlElement = "<div class='row each-comment'>";
                         htmlElement += "<div class='col-md-12'>";
                         htmlElement += "<p class='bold-p-tag-opensans'>";
@@ -44,6 +36,33 @@ $(document).ready(function () {
                             "" + data.body_comment+ "</span>";
                         htmlElement += "<span class='btn-popup-edit-comment' style='margin-left: 10px;cursor: pointer;'>" +
                             "<i class='fas fa-pencil-alt'></i></span>";
+                        htmlElement += "<span class='btn-popup-delete-comment' style='margin-left: 10px;cursor: pointer'>" +
+                            "<i class='fas fa-trash-alt'></i></span>";
+
+                        htmlElement += "<div class='modal fade' id='modalDeleteComment' tabindex='-1' " +
+                            "role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+                        htmlElement += "<div class='modal-dialog modal-dialog-centered' role='document'>";
+                        htmlElement += "<div class='modal-content'>";
+                        htmlElement += "<div class='modal-header'>";
+                        htmlElement += "<h6 class='modal-title' id='exampleModalLongTitle'>Delete Comment</h6>";
+                        htmlElement += "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+                        htmlElement += "<span aria-hidden='true'>&times;</span>";
+                        htmlElement += "</button>";
+
+                        htmlElement += "</div>";
+                        htmlElement += "<div class='modal-body'>";
+                        htmlElement += "<span>Are you sure that you want to delete this comment?</span>";
+                        htmlElement += "</div>";
+
+                        htmlElement += "<div class='modal-footer'>";
+                        htmlElement += "<button type='button' class='btn btn-outline-secondary' data-dismiss='modal'>Close</button>";
+                        htmlElement += "<button type='button' class='btn btn-danger btn-delete-comment' data-ajax-target='"+urlDeleteComment+"'>Delete</button>";
+                        htmlElement += "</div>";
+
+                        htmlElement += "</div>";
+                        htmlElement += "</div>";
+                        htmlElement += "</div>";
+
                         htmlElement += "<div class='edit-comment-form' style='display: none;'>";
                         htmlElement += "<textarea class='form-control' id='txt-edit-comment'></textarea>";
                         htmlElement += "<span class='small-p-tag-blue-color btn-confirm-edit-comment' " +
@@ -227,7 +246,6 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.is_valid) {
-                        alert("Deleted successfully!");
                         location.reload(true);
                     }
                 },

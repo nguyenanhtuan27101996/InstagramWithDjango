@@ -240,6 +240,7 @@ def show_personal_page(request, username, template='pages/personal_page.html', e
             user_profile.save()
             redirect(request.path)
 
+
     #load post of this user to personal page
     post = Post.objects.all().filter(user=user).order_by('-time_posted')
     list_image = []
