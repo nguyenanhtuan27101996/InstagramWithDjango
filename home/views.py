@@ -56,8 +56,16 @@ def show_home_page(request, template='pages/home.html', extra_context=None):
         list_comment.append(comment)
         list_like.append(like)
 
-    users_followed_by_request_user = UserFollow.objects.filter(follower_user=request.user)
-    users_following_request_user = UserFollow.objects.filter(followed_user=request.user)
+    users_followed_by_request_user = UserFollow.objects.filter(
+        follower_user=request.user).order_by('-followed_user')
+    users_following_request_user = UserFollow.objects.filter(
+        followed_user=request.user)
+
+    list_post = []
+    for user_followed_by_request_user in users_followed_by_request_user:
+        post = Post.objects.order_by('-time_posted').filter(user=user_followed_by_request_user.followed_user)[:1]
+        list_post.append(post)
+
     context = {
         'user_profile': user_profile,
         'post_form': post_form,
@@ -67,11 +75,13 @@ def show_home_page(request, template='pages/home.html', extra_context=None):
         'list_like': list_like,
         'users_followed_by_request_user': users_followed_by_request_user,
         'users_following_request_user': users_following_request_user,
+        'list_post': list_post,
     }
     if extra_context is not None:
         context.update(extra_context)
 
     return render(request, template, context)
+
 
 
 @csrf_exempt
@@ -271,10 +281,25 @@ def show_personal_page(request, username, template='pages/personal_page.html', e
     return render(request, template, context)
 
 
+# @login_required(login_url='/accounts/login/')
+# def show_post_by_id(request, username, id):
+#     post = Post.objects.get(id=id)
+#     user = User.objects.get(username=username)
+#     user_profile = UserProfile.objects.get(user=user)
+#     images = Image.objects.all().filter(post=post)
+#     comments = Comment.objects.all().filter(post=post).order_by('-time_commented')
+#     likes = Like.objects.all().filter(post=post)
+#     return render(request, 'pages/post_detail.html', {'post': post,
+#                                                       'images': images,
+#                                                       'comments': comments,
+#                                                       'user_profile': user_profile,
+#                                                       'likes': likes,
+#                                                       })
+
 @login_required(login_url='/accounts/login/')
-def show_post_by_id(request, username, id):
+def show_post_by_id(request, id):
     post = Post.objects.get(id=id)
-    user = User.objects.get(username=username)
+    user = User.objects.get(id=post.user.id)
     user_profile = UserProfile.objects.get(user=user)
     images = Image.objects.all().filter(post=post)
     comments = Comment.objects.all().filter(post=post).order_by('-time_commented')
@@ -285,7 +310,6 @@ def show_post_by_id(request, username, id):
                                                       'user_profile': user_profile,
                                                       'likes': likes,
                                                       })
-
 
 @login_required(login_url='/accounts/login/')
 def show_personal_setting(request, username):

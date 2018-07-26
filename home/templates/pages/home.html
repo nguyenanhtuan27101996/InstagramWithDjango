@@ -52,26 +52,90 @@
                            data-ajax-target="{% url 'search_by_username' %}" class="form-control">
                 </div>
             </form>
-            <script>
-
-            </script>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <a class="nav-link text-center" href="{% url 'sign_up' %}"><i class="far fa-compass"></i></a>
+                    <a class="nav-link text-center" href="{% url 'home' %}"><i class="far fa-compass"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-center" href="{% url 'sign_up' %}"><i class="far fa-heart"></i></a>
+                        <a class="nav-link text-center"
+                        data-toggle="modal" data-target="#modalShowNotifications"
+                        ><i class="far fa-heart"></i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-center" href="{% url 'personal_page' user.username %}"><i
                                 class="far fa-user"></i></a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>
 </div>
+
 <div class="container" style="margin-top: 150px;">
+    <!-- Modal -->
+    <div class="modal" id="modalShowNotifications" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body border rounded" style="max-height: 400px;
+                overflow-y: auto;">
+                    <p>Notifications   <i class="fas fa-clock"></i></p>
+                    {% for posts in list_post %}
+                        {% for post in posts %}
+                            <div class="row"
+                                 style="margin-bottom: 10px;float: left;padding: 0px 10px;">
+                                <a href="javascript:void(0);"
+                                   data-href="{% url 'show_detail_post' post.id %}"
+                                   class="a-tag-of-home open-popup">
+                                    <div class="col-md-12 border rounded"
+                                         style="background: #b8ccee;padding-top: 10px;">
+                                        <p class="bold-p-tag-opensans">
+
+                                            <img src="{{ post.user.userprofile.avatar.url }}" alt="avatar"
+                                                 width="50px" height="50px"
+                                                 style="border-radius: 50%;margin-right: 10px;">
+                                            {{ post.user.username }} posted about:
+                                            {{ post.caption }}
+                                            <br>
+                                        <p class="p-tag-gray-color">{{ post.time_posted }}</p>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+
+                        {% endfor %}
+
+                    {% endfor %}
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal-show-detail-post" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            style="margin: 5px 10px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="max-height:700px; overflow-y: auto;
+             width: 800px;overflow-x: auto">
+                    <iframe src="" id="modeliframe" frameborder="0" height="550px" scrolling="no"
+                            style="height: 550px;width: 768px;zoom: 0;" width="100%">
+                    </iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-8 col-sm-12">
             <div class="row distance-bottom-20">

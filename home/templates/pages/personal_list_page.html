@@ -33,7 +33,7 @@
                     <div class="card h-100">
                         <a href="javascript:void(0);"
                            class="open-popup"
-                           data-href="{% url 'show_detail_post' user_profile.user.username image.post.id %}">
+                           data-href="{% url 'show_detail_post' image.post.id %}">
                             <img class="card-img-top img-change-photo-profile img-show-detail-post"
                                  src="{{ image.photo.url }}"
                                  data-post-caption="{{ image.post.caption }}"></a>

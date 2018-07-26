@@ -30,7 +30,7 @@ $(document).ready(function () {
                         htmlElement = "<div class='row each-comment'>";
                         htmlElement += "<div class='col-md-12'>";
                         htmlElement += "<p class='bold-p-tag-opensans'>";
-                        htmlElement += "<a href='#' class='a-tag-of-home'>";
+                        htmlElement += "<a href='' class='a-tag-of-home'>";
                         htmlElement += "" + data.user_comment + " :</a>&nbsp;&nbsp;&nbsp;" +
                             "<span class='span-contains-comment' data-id-comment='"+data.id_comment+"'>" +
                             "" + data.body_comment+ "</span>";

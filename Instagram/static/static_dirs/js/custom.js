@@ -66,10 +66,13 @@ $(document).ready(function () {
                 $("#search-results").html(data);
             },
         });
+    });
 
-
-    })
-
+    $("body").on("click",".open-popup",function () {
+       var dataURL = $(this).attr('data-href');
+        $('#modeliframe').attr("src", dataURL);
+        $('#modal-show-detail-post').modal('show');
+    });
 
 });
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -13,11 +14,10 @@
         {% for user in user_has_been_found %}
             <li>
                 <a href="{% url 'personal_page' user.username %}">
-                    <img src="{{ user.userprofile.avatar.url }}" width="30px">
+                    <img src="{{ user.userprofile.avatar.url }}" width="30px" alt="avatar">
                 </a>
                 <a href="{% url 'personal_page' user.username %}" class="a-tag-of-home bold-p-tag-opensans">
                     {{ user.username }}</a>
-
             </li>
         {% endfor %}
     </div>

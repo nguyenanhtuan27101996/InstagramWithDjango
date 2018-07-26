@@ -224,7 +224,7 @@
                                             <div class="row each-comment">
                                                 <div class="col-md-12 abca">
                                                     <p class="bold-p-tag-opensans">
-                                                        <a href="#" class="a-tag-of-home">
+                                                        <a href="{% url 'personal_page' comment.user.username %}" class="a-tag-of-home">
                                                             {{ comment.user.username }}:</a>
                                                         &nbsp;&nbsp;&nbsp;
                                                         {% if request.user.username == comment.user.username %}
