@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Post, Image, Comment
+from .models import UserProfile, Post, Image, Comment, UserFollow
 # Register your models here.
 
 
@@ -27,13 +27,14 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [ImageInline, CommentInline]
 
 
-# class ImageAdmin(admin.ModelAdmin):
-#     list_display = ['post', 'photo']
-#     list_filter = ['post']
-#     search_fields = ['post__caption']
-#     list_per_page = 5
+class UserFollowAdmin(admin.ModelAdmin):
+    list_display = ['id', 'follower_user', 'followed_user']
+    list_per_page = 5
+    list_filter =  ['follower_user']
+    search_fields = ['follower_user']
 
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(UserFollow, UserFollowAdmin)
 

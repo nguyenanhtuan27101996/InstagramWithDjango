@@ -46,6 +46,7 @@ class Post(models.Model):
         return self.show_part_of_caption()
 
 
+
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='post/photos')
@@ -66,3 +67,4 @@ class Like(models.Model):
 class UserFollow(models.Model):
     follower_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower_users')
     followed_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_users')
+

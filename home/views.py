@@ -281,21 +281,6 @@ def show_personal_page(request, username, template='pages/personal_page.html', e
     return render(request, template, context)
 
 
-# @login_required(login_url='/accounts/login/')
-# def show_post_by_id(request, username, id):
-#     post = Post.objects.get(id=id)
-#     user = User.objects.get(username=username)
-#     user_profile = UserProfile.objects.get(user=user)
-#     images = Image.objects.all().filter(post=post)
-#     comments = Comment.objects.all().filter(post=post).order_by('-time_commented')
-#     likes = Like.objects.all().filter(post=post)
-#     return render(request, 'pages/post_detail.html', {'post': post,
-#                                                       'images': images,
-#                                                       'comments': comments,
-#                                                       'user_profile': user_profile,
-#                                                       'likes': likes,
-#                                                       })
-
 @login_required(login_url='/accounts/login/')
 def show_post_by_id(request, id):
     post = Post.objects.get(id=id)
@@ -310,6 +295,7 @@ def show_post_by_id(request, id):
                                                       'user_profile': user_profile,
                                                       'likes': likes,
                                                       })
+
 
 @login_required(login_url='/accounts/login/')
 def show_personal_setting(request, username):
