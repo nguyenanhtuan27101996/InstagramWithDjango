@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import UserProfile, User, Post
+
 # Create your tests here.
 
 
